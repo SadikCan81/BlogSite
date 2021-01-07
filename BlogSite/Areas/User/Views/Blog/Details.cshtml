@@ -1,0 +1,30 @@
+﻿@model Blog
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <h2>@Model.Title</h2>
+                <br />
+                <h4>@Model.SubTitle</h4>
+                <br />
+                <hr />
+
+                <img src="@Model.ImagePath" width="100%" class="rounded" />
+                @Html.Raw(Model.Content)
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>
+<!-- Pager -->
+<div class="clearfix">
+    <a class="btn btn-primary float-right" asp-area="User" asp-controller="Blog" asp-action="Index">All Posts &rarr;</a>
+</div>
+

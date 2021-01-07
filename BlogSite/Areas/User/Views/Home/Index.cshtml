@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Blog>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+        @foreach (var blog in Model.ToList())
+        {
+            <div class="post-preview">
+                <a asp-area="User" asp-controller="Blog" asp-action="Details" asp-route-id="@blog.Id">
+                    <h2 class="post-title">
+                        @blog.Title
+                    </h2>
+                    <h3 class="post-subtitle">
+                        @blog.SubTitle
+                    </h3>
+                </a>
+                <p class="post-meta">
+                    Posted by
+                    <a href="#">@blog.ApplicationUser.FullName</a>
+                    on @blog.CreatedDate.ToString("MMMM") @blog.CreatedDate.Month, @blog.CreatedDate.Year
+                </p>
+            </div>
+            <hr>
+        }
+        <!-- Pager -->
+        <div class="clearfix">
+            <a class="btn btn-primary float-right" asp-area="User" asp-controller="Blog" asp-action="Index">All Posts &rarr;</a>
+        </div>
+    </div>
+</div>

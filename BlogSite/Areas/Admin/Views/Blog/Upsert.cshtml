@@ -1,0 +1,143 @@
+﻿@model BlogSite.Models.ViewModels.BlogVM
+@using BlogSite.Utility
+@{
+    ViewData["Title"] = "Upsert";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = "Create Blog";
+}
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+
+    <div class="row px-2 mx-2 backgroundWhite border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model.Blog.Id != 0)
+        {
+            <input type="hidden" asp-for="Blog.Id" />
+            <input type="hidden" asp-for="Blog.ApplicationUserId"/>
+            title = "Edit Blog";
+        }
+
+        <div class="col-12">
+            <h2 class="text-primary">@title</h2>
+            <br />
+        </div>
+        <div class="col-9">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Blog.Title"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Blog.Title" class="form-control" />
+                    <span asp-validation-for="Blog.Title" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Blog.SubTitle"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Blog.SubTitle" class="form-control" />
+                    <span asp-validation-for="Blog.SubTitle" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Blog.Content"></label>
+                </div>
+                <div class="col-8">
+                    <textarea asp-for="Blog.Content" class="form-control" style="height:250px;"></textarea>
+                    <span asp-validation-for="Blog.Content" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Blog.ImagePath"></label>
+                </div>
+                <div class="col-8">
+                    <input type="file" name="files" id="uploadBox" accept="image/*" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Blog.Category.Name"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="Blog.CategoryId" asp-items="Model.CategoryList" class="form-control">
+                        <option value="" hidden selected>Choose a Category</option>
+                    </select>
+                    <span class="text-danger" asp-validation-for="Blog.CategoryId"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-12">
+                    <div class="py-2 ">
+                        <input type="radio" name="rdActive" value="@SD.Active" /> @SD.Active
+                        <input type="radio" name="rdActive" value="@SD.NotActive" /> @SD.NotActive
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-8 offset-4">
+                    @if (Model.Blog.Id != 0)
+                    {
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary form-control" asp-route-id="@Model.Blog.Id" style="padding: .375rem .75rem">Update</button>
+                            </div>
+                            <div class="col">
+                                <a asp-action="Index" class="btn btn-success form-control" style="padding: .375rem .75rem">Back to List</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control" style="padding: .375rem .75rem">Create</button>
+                            </div>
+                            <div class="col">
+                                <a asp-action="Index" class="btn btn-success form-control" style="padding: .375rem .75rem">Back to List</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        @if (Model.Blog.Id != 0)
+        {
+            <div class="col-3">
+                <img src="@Model.Blog.ImagePath" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+            </div>
+        }
+    </div>
+
+</form>
+
+@section Scripts{
+    <script>
+
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+
+        function validateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal({
+                    title: "Please add an image!",
+                    icon: "warning",
+                    dangerMode: true
+                })
+
+                return false;
+            }
+
+            return true;
+        }
+
+    </script>
+}
+
+
+
