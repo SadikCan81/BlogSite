@@ -25,7 +25,8 @@ namespace BlogSite.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _unitOfWork.Sp_Call.ReturnList<Category>(SD.usp_GetAllCategory, null) });
+            var categoryList = _unitOfWork.Sp_Call.ReturnList<Category>(SD.usp_GetAllCategory, null);
+            return Ok(categoryList);
         }
 
         [HttpGet("{id}")]
@@ -33,27 +34,18 @@ namespace BlogSite.Areas.Admin.Controllers
         {
             if (id != null)
             {
-                return Json(new { data = _unitOfWork.Category.GetFirstOrDefault(x => x.Id == id) });
+                var category = _unitOfWork.Category.GetFirstOrDefault(x => x.Id == id);
+                if(category != null)
+                {
+                    return Ok(category);
+                }
+                else
+                {
+                    return BadRequest(new { message = "Could not found any category for this id!" });
+                }
             }
 
-            return Json(new { data = "Id is required!" });
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            if (id > 0)
-            {
-                _unitOfWork.Category.Remove(id);
-                _unitOfWork.Save();
-
-                return Json(new { success = true, message = "Delete successful." });
-            }
-            else
-            {
-                return Json(new { success = false, message = "Error while deleting." });
-            }
-
-        }
+            return BadRequest(new { message = "Id is required!" });
+        }       
     }
 }

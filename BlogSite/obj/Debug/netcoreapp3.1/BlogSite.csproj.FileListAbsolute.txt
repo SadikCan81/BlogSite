@@ -427,8 +427,6 @@ C:\Users\sadik\Desktop\.net core blog sitesi\BlogSite\BlogSite\obj\Debug\netcore
 C:\Users\sadik\Desktop\.net core blog sitesi\BlogSite\BlogSite\obj\Debug\netcoreapp3.1\Razor\Areas\User\Views\Home\Privacy.cshtml.g.cs
 C:\Users\sadik\Desktop\.net core blog sitesi\BlogSite\BlogSite\obj\Debug\netcoreapp3.1\Razor\Areas\User\Views\_ViewImports.cshtml.g.cs
 C:\Users\sadik\Desktop\.net core blog sitesi\BlogSite\BlogSite\obj\Debug\netcoreapp3.1\Razor\Areas\User\Views\_ViewStart.cshtml.g.cs
-C:\Users\sadik\Desktop\.net core blog sitesi\BlogSite\BlogSite\bin\Debug\netcoreapp3.1\System.Security.Cryptography.Pkcs.dll
-C:\Users\sadik\Desktop\.net core blog sitesi\BlogSite\BlogSite\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Cryptography.Pkcs.dll
 C:\Users\sadik\Desktop\.net core blog sitesi\BlogSite\BlogSite\bin\Debug\netcoreapp3.1\BlogSite.DataAccess.dll
 C:\Users\sadik\Desktop\.net core blog sitesi\BlogSite\BlogSite\bin\Debug\netcoreapp3.1\BlogSite.Models.dll
 C:\Users\sadik\Desktop\.net core blog sitesi\BlogSite\BlogSite\bin\Debug\netcoreapp3.1\BlogSite.Utility.dll

@@ -28,7 +28,8 @@ namespace BlogSite.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _unitOfWork.Sp_Call.ReturnList<BlogDapperVM>(SD.usp_GetAllBlog, null) });
+            var blogList = _unitOfWork.Sp_Call.ReturnList<BlogDapperVM>(SD.usp_GetAllBlog, null);
+            return Ok(blogList);
         }
 
         [HttpGet("{id}")]
@@ -36,42 +37,18 @@ namespace BlogSite.Areas.Admin.Controllers
         {
             if(id != null)
             {
-                return Json(new { data = _unitOfWork.Blog.GetFirstOrDefault(x => x.Id == id,includeProperties: "Category,ApplicationUser") });
-            }
-
-            return Json(new { data = "Id is required!" });
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            if (id > 0)
-            {
-                var removingObj = _unitOfWork.Blog.GetFirstOrDefault(x => x.Id == id);
-                if (removingObj != null)
+                var blog = _unitOfWork.Blog.GetFirstOrDefault(x => x.Id == id, includeProperties: "Category,ApplicationUser");
+                if(blog != null)
                 {
-                    string webRootPath = _hostEnvironment.WebRootPath;
-                    var imagePath = Path.Combine(webRootPath, removingObj.ImagePath.TrimStart('\\'));
-
-                    if (System.IO.File.Exists(imagePath))
-                    {
-                        System.IO.File.Delete(imagePath);
-                    }
-
-                    _unitOfWork.Blog.Remove(removingObj);
-                    _unitOfWork.Save();
-
-                    return Json(new { success = true, message = "Delete successful." });
+                    return Ok(blog);
                 }
                 else
                 {
-                    return Json(new { success = false, message = "Error while deleting." });
+                    return BadRequest(new { message = "Could not found any blog for this id!" });
                 }
             }
-            else
-            {
-                return Json(new { success = false, message = "Error while deleting." });
-            }
+
+            return BadRequest(new { message = "Id is required!" });
         }
     }
 }
